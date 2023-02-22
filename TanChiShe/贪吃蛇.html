@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        html,body {
+            height: 100%;
+        }
+
+        body {
+            background: url(./img/bg.jpg);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .btnbox{
+            width: 200px;
+            height: 300px;
+            /*background: orange;*/
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            position: fixed;
+        }
+
+        .btnbox button{
+            width: 100px;
+            height: 50px;
+            font-size: 23px;
+            background:orange;
+            color:white;
+            border-radius: 30px;
+        }
+
+        .map{
+            width: 1000px;
+            height: 600px;
+            /*background: url();*/
+            position: fixed;
+            top: 0;
+            left: 0;
+            right:0;
+            bottom: 0;
+            margin:auto;
+            box-shadow: 0px 0px 100px rgb(0, 0, 0) inset,0px 0px 30px white;
+            background-color: rgba(0, 0, 0, 0.884);
+        }
+
+        .map>div{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            border-radius:50%;
+            box-shadow: 0px 0px 10px yellow;
+        }
+
+        div.head{
+            background: radial-gradient(#ffc000,#ff4e00);
+        }
+
+        div.body{
+            background: radial-gradient(#fff369,#fa791a);
+        }
+
+        div.food{
+            background:radial-gradient(#a7fa64,#4f8524);
+            animation:foodAnimate 1s linear infinite;
+            
+        }
+
+        @keyframes foodAnimate{
+            0%{
+                box-shadow: 0px 0px 10px white;
+            }
+            50%{
+                box-shadow: 0px 0px 80px yellowgreen;
+            }
+            100%{
+                box-shadow: 0px 0px 10px white;
+            }
+        }
+
+        .score{
+            font-size: 25px;
+            color: black;
+        }
+        .score span{
+            color: red;
+            font-weight: bold;
+        }
+        .panbg{
+            width: 1000px;
+            height: 600px;
+            background: url(./img/bg.jpg) no-repeat ;
+            opacity: 0.5;
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            z-index: 999;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            margin: auto;
+            display: none;
+        }
+       
+
+    </style>
+</head>
+<body>
+    
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=484249940&auto=1&height=66"></iframe>
+    
+    <div class = "panbg"></div>
+    <div class="btnbox">
+        <button id="start">开始</button>
+        <button id="pause">暂停</button>
+        <button id="restart">重新开始</button>
+        <div class = "score">得分:<span>0</span></div>
+    </div>
+    <div class="map">
+        
+    </div>
+    <script src="./food.js"></script>
+    <script src="./snake.js"></script>
+    <script src="./game.js"></script>
+    <script>
+        /*
+        const food=new Food(".map");
+        const snake=new Snake(".map");
+
+         */
+        const game=new Game(".map",".score span",".panbg");
+        //拿到按钮
+        const start = document.querySelector("#start");
+        const pause = document.querySelector("#pause");
+        const restart = document.querySelector("#restart");
+
+        start.onclick = function(){
+            game.start();
+        }
+        pause.onclick = function(){
+            game.pause();
+        }
+        restart.onclick = function(){
+            game.restart();
+        }
+        //键盘监听  左37 上38 右39 下40
+        document.onkeydown = function(e){
+            switch(e.keyCode){
+                case 37:
+                    game.change("left");
+                    break;
+                case 38:
+                    game.change("top");
+                    break;
+                case 39:
+                    game.change("right");
+                    break;
+                case 40:
+                    game.change("bottom");
+                    break;
+                case 13:
+                    game.start();
+                    break;
+                case 32:
+                    game.pause();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    </script>        
+    
+</body>
+</html>
